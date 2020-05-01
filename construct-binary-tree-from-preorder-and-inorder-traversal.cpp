@@ -11,27 +11,36 @@
  */
 class Solution {
 public:
-    
-    
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-       if (preorder.empty())
-            return nullptr;
-        int root =preorder[0];
-        preorder.erase(preorder.begin());
         
-        vector<int> iLeft(inorder.begin(),std::find(inorder.begin(),inorder.end(),root )),
-                    iRight(std::find(inorder.begin(),inorder.end(),root),inorder.end());
-        
-	    if (!iRight.empty()) iRight.erase(iRight.begin());
-        
-        set<int> right(iRight.begin(),iRight.end());
-        
-        vector<int> pLeft(preorder.begin(),
-                          std::find_if(preorder.begin(), preorder.end(),
-                                       [right](auto elem) {return right.find(elem)!=right.end();}  ) ),
-                    pRight(std::find_if(preorder.begin(), preorder.end(),
-                                       [right](auto elem) {return right.find(elem)!=right.end();}),
-                            preorder.end()  ) ;
-        return new TreeNode(root, buildTree(pLeft,iLeft), buildTree(pRight,iRight));
-    }
+TreeNode* buildTree(vector<int> preorder, vector<int> inorder) {
+    if (preorder.size() == 0)
+        return NULL;
+	stack<TreeNode*> pnStck;
+	int pIndex=0, iIndex=0;
+	TreeNode* current = new TreeNode(preorder[pIndex]), *root = current;
+	pnStck.push(current);
+	pIndex++;
+	while (!pnStck.empty()) {
+		while (pnStck.top()->val != inorder[iIndex]) {
+			//going down on  left
+			pnStck.top()->left = new TreeNode(preorder[pIndex]);
+			pnStck.push(pnStck.top()->left);
+			pIndex++;
+		}
+		while (!pnStck.empty() && pnStck.top()->val == inorder[iIndex]) {
+		//look where right begin
+			current = pnStck.top(); pnStck.pop();
+			iIndex++;
+		}
+		if (pIndex<preorder.size()) {
+			current->right = new TreeNode(preorder[pIndex]);
+			current = current->right;
+			pIndex++;
+			pnStck.push(current);
+		}
+	}
+
+
+    return root;
+}
 };
