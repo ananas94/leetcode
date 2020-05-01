@@ -19,21 +19,18 @@ public:
 class Solution {
     std::array<Node*,4097> arr;
     int size;
-    void fillArr(Node *n,int current){
-        if (!n) return;
-        arr[current]=n;
-        size=current;
-        fillArr(n->left, current*2);
-        fillArr(n->right, current*2+1);
+    void connect_childrens(Node* root) {
+        if (!root) return;
+        if (root->left)
+            root->left->next = root->right;
+        if (root->left && root->next)
+            root->right->next = root->next->left;
+        connect_childrens(root->left);
+        connect_childrens(root->right);
     }
 public:
     Node* connect(Node* root) {
-        fillArr(root,1);
-        for (int i=1;i<size;i<<=1){
-            for (int j=i;j<i*2-1;j++)
-                arr[j]->next=arr[j+1];
-            arr[i*2-1]=NULL;
-        }
+        connect_childrens(root);
         return root;
     }
 };
