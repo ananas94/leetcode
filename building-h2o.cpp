@@ -4,7 +4,7 @@ class H2O {
     volatile int count;
     
     std::condition_variable cvO;
-    //std::mutex mO;
+    std::mutex mO;
     //volatile int countO;
 public:
     H2O() {
@@ -22,7 +22,7 @@ public:
     }
 
     void oxygen(function<void()> releaseOxygen) {
-        std::unique_lock lk(m);
+        std::unique_lock lk(mO);
         
         cvO.wait(lk, [this]() { return (this->count%3==0); });
         // releaseOxygen() outputs "O". Do not change or remove this line.
