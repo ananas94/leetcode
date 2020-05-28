@@ -4,7 +4,7 @@
             int base=0;
             std::array<int,N+1> ret;
             ret[0]=0;
-            for (int i=1; i<N; i++) {
+            for (int i=1; i<=N; i++) {
                 if ( (1<<base) == i) { ret[i]=1; base++; }
                 else ret[i]= 1+ret[i-(1<<base-1)];
             }
@@ -27,13 +27,12 @@ class Solution {
     }
 
 
-   // std::array<int,66001> pred = precalc<66000>();
+    std::array<int,66001> pred = precalc<66000>();
 public:
     vector<int> countBits(int num) {
-        { return calc(num); }
-         /*if (num>66000)
+        if (num>66000) { return calc(num); }
         else {
             return  vector<int>(pred.begin(),pred.begin()+num+1);
-        }*/
+        }
     }
 };
