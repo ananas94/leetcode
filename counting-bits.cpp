@@ -27,12 +27,12 @@ class Solution {
     }
 
 
-    std::array<int,66001> pred = precalc<66000>();
+    std::array<int,185724> pred = precalc<185723>();
 public:
     vector<int> countBits(int num) {
-        if (num>66000) { return calc(num); }
-        else {
+      /*  if (num>66000) { return calc(num); }
+        else { */
             return  vector<int>(pred.begin(),pred.begin()+num+1);
-        }
+      //  }
     }
 };
