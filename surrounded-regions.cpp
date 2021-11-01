@@ -30,7 +30,6 @@ public:
                    board[n-1][j] = 'o';
            }
         }
-        std::cout << q.size() <<std::endl;
         while (!q.empty())
         {
                 auto elem = q.front();
