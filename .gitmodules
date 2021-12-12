@@ -1,0 +1,3 @@
+[submodule "leetcode_script"]
+	path = leetcode_script
+	url = git@github.com:ananas94/leetcode_script.git
